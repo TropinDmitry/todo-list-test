@@ -1,5 +1,23 @@
 # Vue 3 + TypeScript + Vite
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+Технологии
+Vue.js (Composition API), Pinia, Typescript, Tailwind CSS, Vue Router, Vite, Lucide Vue Next
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+Уровни реализации модулей
+Хранение данных
+Уровень: Базовый Данные задач хранятся локально в localStorage браузера
+
+Компонентная архитектура
+Уровень: Средний
+
+Верстка
+Уровень: Базовый / Средний
+
+Краткая инструкция по запуску проекта
+Для запуска приложения выполните следующие шаги:
+
+Клонируйте репозиторий: git clone 'имя_репозитория'
+
+Установите зависимости: npm install
+
+Запустите проект: npm run dev
