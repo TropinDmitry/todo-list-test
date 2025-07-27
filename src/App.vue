@@ -1,25 +1,26 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import MHeader from './components/MHeader.vue';
+import MLoading from './components/ui/MLoading.vue';
+import MToasts from './components/ui/MToasts.vue';
+import { useStore } from './stores/store';
 
 
+const store = useStore();
+
+onMounted(() => {
+  store.initialData();
+});
 </script>
 
 <template>
   <MHeader />
   <router-view></router-view>
+
+  <MToasts />
+  <MLoading />
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
+
 </style>

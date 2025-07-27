@@ -20,6 +20,7 @@ export const useStore = defineStore('store', {
         async initialData() {
             try {
                 this.isLoading = true;
+                await new Promise(res => setTimeout(res, 50)); // замена минимального времени ожидания при запросе к API
 
                 const todos = localStorage.getItem('todos');
                 if (todos) {
@@ -37,6 +38,7 @@ export const useStore = defineStore('store', {
 
         saveData() {
             try {
+
                 localStorage.setItem('todos', JSON.stringify(this.todos));
             } catch (error) {
                 console.error('Ошибка при сохранении данных:', error);

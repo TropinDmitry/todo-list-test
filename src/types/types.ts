@@ -32,3 +32,11 @@ export interface PaginationInfo {
     hasPrevPage: boolean
 }
 
+export interface Toast {
+  id: number
+  type: "success" | "error" | "warning"
+  message: string
+  duration?: number
+  _timer?: ReturnType<typeof setTimeout>
+}
+

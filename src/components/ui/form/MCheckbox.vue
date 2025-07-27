@@ -18,7 +18,6 @@ const handleChange = (event: Event) => {
     const target = event.target as HTMLInputElement;
 
     modelValue.value = target.checked;
-    console.log(modelValue.value)
     emit('change', target.checked);
 }
 

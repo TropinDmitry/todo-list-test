@@ -6,7 +6,10 @@ import MTextArea from '../ui/form/MTextArea.vue';
 import MButton from '../ui/MButton.vue';
 import type { Todo } from '../../types/types';
 import { X, Plus } from 'lucide-vue-next';
+import { useToast } from '../../composables/useToast';
 
+
+const { success, error, warning } = useToast();
 
 const formData = reactive<Omit<Todo, 'id' | 'createdAt'>>({
     name: '',
@@ -36,14 +39,23 @@ const onSubmit = () => {
 
 const addTag = () => {
     const tag = newTag.value.trim();
-    if (tag && !formData.tags.includes(tag)) {
-        formData.tags.push(tag);
-        newTag.value = '';
+
+    if (tag) {
+        if(!formData.tags.includes(tag)) {
+            formData.tags.push(tag);
+            newTag.value = '';
+            success('Тег добавлен');
+        } else {
+            warning('Такой тег уже существует');
+        }
+    } else {
+        warning('Введите название тега');
     }
 }
 
 const removeTag = (tagToRemove: string) => {
     formData.tags = formData.tags.filter(tag => tag !== tagToRemove);
+    success('Тег удален');
 };
 
 const onTagKeydown = (event: KeyboardEvent) => {

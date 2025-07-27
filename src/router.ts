@@ -19,7 +19,8 @@ const routes: RouteRecordRaw[] = [
         path: '/edit/:id',
         name: 'EditTodo',
         component: () => import('./views/EditTaskView.vue'),
-        meta: { title: 'Редактировать задачу'}
+        meta: { title: 'Редактировать задачу'},
+        props: true
     }
 ]
 
