@@ -17,7 +17,7 @@ defineEmits<{
 <template>
     <form
         @submit.prevent="$emit('submit', $event)"
-        class="bg-white p-6 rounded-lg shadow-sm"
+        class="bg-white p-6 rounded-lg shadow-sm max-w-200"
     >
         <label
             v-if="labelText"

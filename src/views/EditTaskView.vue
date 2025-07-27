@@ -1,20 +1,41 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import TodoForm from '../components/todos/TodoForm.vue';
 import router from '../router';
 import { useStore } from '../stores/store';
 import type { Todo } from '../types/types';
 import { useRoute } from 'vue-router';
+import { useToast } from '../composables/useToast';
 
 
 const route = useRoute();
 const store = useStore();
 const isLoading = ref(true);
 const currentTodo = ref<Todo | null>(null);
+const { success, error } = useToast();
+const pageTitle = 'Редактирование задачи';
 
-const pageTitle = computed(() => {
-    currentTodo.value ? `Редактирование ${currentTodo.value.name}` : 'Редактирование задачи'
-});
+const handleEditTodo = async (formData: Omit<Todo, 'id' | 'createdAt'>) => {
+    if (!currentTodo.value) return;
+
+    try {
+        await store.editTodo({
+            ...formData,
+            id: currentTodo.value.id,
+            createdAt: currentTodo.value.createdAt
+        });
+
+        success("Задача успешно обновлена");
+        router.push('/');
+    } catch (err) {
+        console.error(err);
+        error('Не удалось обновить задачу');
+    }
+};
+
+const handleCancel = () => {
+    router.push('/');
+}
 
 onMounted(() => {
     try {
@@ -31,33 +52,13 @@ onMounted(() => {
     } finally {
         isLoading.value = false;
     }
-})
-
-const handleEditTodo = async (formData: Omit<Todo, 'id' | 'createdAt'>) => {
-    if (!currentTodo.value) return;
-
-    try {
-        await store.editTodo({
-            ...formData,
-            id: currentTodo.value.id,
-            createdAt: currentTodo.value.createdAt
-        });
-
-        router.push('/');
-    } catch (err) {
-        console.error(err);
-    }
-};
-
-const handleCancel = () => {
-    router.push('/');
-}
+});
 </script>
 
 <template>
     <div class="min-h-screen bg-gray-50 py-8">
         <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900">
+            <h1 class="text-center text-3xl font-bold text-gray-900">
                 {{ pageTitle }}
             </h1>
         </div>

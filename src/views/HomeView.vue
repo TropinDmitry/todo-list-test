@@ -2,7 +2,7 @@
   lang="ts"
   setup
 >
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from '../stores/store';
 import router from '../router';
 import { todoService } from '../services/todoService';

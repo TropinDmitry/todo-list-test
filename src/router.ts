@@ -21,6 +21,12 @@ const routes: RouteRecordRaw[] = [
         component: () => import('./views/EditTaskView.vue'),
         meta: { title: 'Редактировать задачу'},
         props: true
+    },
+    {
+        path: "/:pathMatch(.*)*",
+        name: 'NotFound',
+        component: () => import("./views/NotFoundView.vue"),
+        meta: { title: "Страница не найдена"}
     }
 ]
 

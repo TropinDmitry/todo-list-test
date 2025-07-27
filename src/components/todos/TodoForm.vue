@@ -1,4 +1,7 @@
-<script lang="ts" setup>
+<script
+    lang="ts"
+    setup
+>
 import { reactive, ref, watch } from 'vue';
 import MForm from '../ui/form/MForm.vue';
 import MInput from '../ui/form/MInput.vue';
@@ -34,14 +37,14 @@ const emit = defineEmits<{
 }>();
 
 const onSubmit = () => {
-    emit('submit', {...formData});
+    emit('submit', { ...formData });
 };
 
 const addTag = () => {
     const tag = newTag.value.trim();
 
     if (tag) {
-        if(!formData.tags.includes(tag)) {
+        if (!formData.tags.includes(tag)) {
             formData.tags.push(tag);
             newTag.value = '';
             success('Тег добавлен');
@@ -75,68 +78,95 @@ watch(() => props.initialData, (newVal) => {
             isCompleted: newVal.isCompleted || false
         })
     }
-}, { immediate: true});
+}, { immediate: true });
 </script>
 
 <template>
-    <div class="max-w-2xl mx-auto">
-
-    </div>
-    <MForm @submit="onSubmit" :title="formTitle" class="space-y-6">
-        <MInput v-model="formData.name" label-text="Название" type="text" :required="true" 
-            name="name" placeholder="Введите нразвание задачи..." />
-        
-        <MTextArea v-model="formData.description" label-text="Описание задачи" :required="true" name="description"
-            rows="4" placeholder="Опишите задачу..." />
-            
-        <MInput
-            v-model="formData.dueDate"
-            label-text="Срок выполнения"
-            type="date"
-            name="dueDate"
-        />
-
-        <div class="flex gap-2 mb-3">
+    <div class="max-w-2xl mx-auto mt-8">
+        <MForm
+            @submit="onSubmit"
+            :title="formTitle"
+            class="space-y-6"
+        >
             <MInput
-                v-model="newTag"
-                name="newTag"
+                v-model="formData.name"
+                label-text="Название"
                 type="text"
-                placeholder="Добавить тег..."
-                @keydown="onTagKeydown"
-                class="flex-1"
+                :required="true"
+                name="name"
+                placeholder="Введите нразвание задачи..."
             />
-            <MButton
-                type="button"
-                @click="addTag"
-                :disabled="!newTag.trim()"
-                class="flex items-center gap-1"
-            >
-                <Plus class="w-4 h-4" />
-                Добавить
-            </MButton>
-        </div>
 
-        <div v-if="formData.tags.length > 0" class="flex flex-wrap gap-2">
-            <span
-                v-for="tag in formData.tags"
-                :key="tag"
-                class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm"
-            >
-                {{ tag }}
+            <MTextArea
+                v-model="formData.description"
+                label-text="Описание задачи"
+                :required="true"
+                name="description"
+                rows="4"
+                placeholder="Опишите задачу..."
+            />
+
+            <MInput
+                v-model="formData.dueDate"
+                label-text="Срок выполнения"
+                type="date"
+                name="dueDate"
+            />
+
+            <div class="flex gap-2 mb-3">
+                <MInput
+                    v-model="newTag"
+                    name="newTag"
+                    type="text"
+                    placeholder="Добавить тег..."
+                    @keydown="onTagKeydown"
+                    class="flex-1"
+                />
                 <MButton
                     type="button"
-                    @click="removeTag(tag)"
-                    class="ml-1 hover-text-red-600 transition-colors"
+                    @click="addTag"
+                    :disabled="!newTag.trim()"
+                    class="flex items-center gap-1"
                 >
-                    <X class="w-3 h-3" />
+                    <Plus class="w-4 h-4" />
+                    Добавить
                 </MButton>
+            </div>
 
-            </span>
-        </div>
+            <div
+                v-if="formData.tags.length > 0"
+                class="flex flex-wrap gap-2"
+            >
+                <span
+                    v-for="tag in formData.tags"
+                    :key="tag"
+                    class="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-sm"
+                >
+                    {{ tag }}
+                    <MButton
+                        type="button"
+                        @click="removeTag(tag)"
+                        class="ml-1 hover-text-red-600 transition-colors"
+                    >
+                        <X class="w-3 h-3" />
+                    </MButton>
 
-        <div class="form__buttons flex gap-3 justify-end pt-4 border-t">
-            <MButton v-if="submitBtnText" type="submit">{{ submitBtnText }}</MButton>
-            <MButton v-if="cancelBtnText" @click="$emit('cancel')" type="button">{{ cancelBtnText }}</MButton>
-        </div>
-    </MForm>
+                </span>
+            </div>
+
+            <div class="form__buttons flex gap-3 justify-between pt-4 border-t">
+                <MButton
+                    v-if="submitBtnText"
+                    type="submit"
+                    class="bg-[#1ec1d7] py-2 px-3 rounded-xl colo"
+                >{{ submitBtnText }}</MButton>
+                <MButton
+                    v-if="cancelBtnText"
+                    @click="$emit('cancel')"
+                    type="button"
+                    class="bg-red-200 py-2 px-3 rounded-xl colo"
+                >{{ cancelBtnText }}</MButton>
+            </div>
+        </MForm>
+    </div>
 </template>
